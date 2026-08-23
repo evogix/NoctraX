@@ -129,7 +129,7 @@ hacker_007
 
 ### 5. Flags Cheatsheet
 ```bash
---only-used    # only FOUND dikhao
+--only-used    # show only FOUND
 --silent       # clean output, no banner
 --json         # JSON export
 --csv          # CSV export

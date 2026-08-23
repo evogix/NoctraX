@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "noctrax"
+version = "2.0.0"
+description = "NoctraX VOID SPECTER by @faizalx1337 — Dark Ghost Trace OSINT, 80+ Sites, Breach Intel, Silent Hunt"
+readme = "README.md"
+authors = [{name="faizalx1337", email="faizalx1337@proton.me"}]
+license = {text="MIT"}
+requires-python = ">=3.8"
+dependencies = [
+  "httpx>=0.24.0",
+  "trio>=0.22.0",
+  "beautifulsoup4>=4.12.0",
+  "termcolor>=2.3.0",
+  "colorama>=0.4.6",
+  "tqdm>=4.65.0"
+]
+keywords = ["osint", "dark", "noctrax", "faizalx1337", "ghost", "void", "hacker"]
+
+[project.scripts]
+noctrax = "noctrax.__main__:main"
+noctrax-native = "noctrax.__main__:main"
+
+[project.urls]
+Homepage = "https://github.com/evogix/NoctraX"
+Author = "https://instagram.com/faizalx1337"
+
+[tool.setuptools.packages.find]
+include = ["noctrax*"]

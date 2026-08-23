@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+build/
+dist/
+*.csv
+*.json
+noctrax_*.csv
+noctrax_*.json
+holehe_*.csv
+.env
+.venv/

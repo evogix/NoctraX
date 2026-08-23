@@ -15,7 +15,7 @@ def build_parser():
     p.add_argument("--username", dest="username", help="Target username to hunt (50+ sites)")
     p.add_argument("--phone", dest="phone", help="Target phone number (with country code, e.g. +91XXXXXXXXXX)")
     p.add_argument("--only-used", dest="only_used", action="store_true", help="Show only FOUND")
-    p.add_argument("--silent", action="store_true", help="Clean output — only FOUND (output hata ke)")
+    p.add_argument("--silent", action="store_true", help="Clean output — only FOUND, no banner")
     p.add_argument("--no-color", dest="no_color", action="store_true", help="No colors")
     p.add_argument("--no-clear", dest="no_clear", action="store_true", help="Do not clear screen")
     p.add_argument("--csv", dest="csv_out", action="store_true", help="Export CSV")

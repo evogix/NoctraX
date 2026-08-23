@@ -38,7 +38,7 @@
 
 - ✅ 100% Native — no holehe, no sherlock dependency
 - ✅ Colorama neon dark theme — professional hacker vibe
-- ✅ Silent mode — `output hata ke` sirf FOUND
+- ✅ Silent mode — only FOUND results
 - ✅ File pipeline — mixed `email, phone, username` in one file
 - ✅ Ethical — dummy examples only, no real PII in docs
 
@@ -129,8 +129,8 @@ hacker_007
 
 ### 5. Flags Cheatsheet
 ```bash
---only-used    # sirf FOUND dikhao
---silent       # output hata ke, no banner
+--only-used    # only FOUND dikhao
+--silent       # clean output, no banner
 --json         # JSON export
 --csv          # CSV export
 --no-breach    # breach skip (email)

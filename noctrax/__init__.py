@@ -1,2 +1,2 @@
-__version__ = "2.0.0"
-__author__ = "faizalx1337"
+__version__ = "2.2.0"
+__author__ = "Md. Faizal — @faizalx1337"

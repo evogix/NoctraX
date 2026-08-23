@@ -1,4 +1,4 @@
-# NoctraX — by @faizalx1337
+# NoctraX — by Md. Faizal (@faizalx1337)
 ### WE SEE WHAT YOU TRY TO HIDE
 
 ```

@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "noctrax"
-version = "2.1.0"
-description = "NoctraX v2.1 VOID SPECTER by @faizalx1337 — Dark Ghost Trace OSINT, 80+ Sites, Breach Intel, Silent Hunt"
+version = "2.2.0"
+description = "NoctraX v2.2 VOID SPECTER + PIPELINE by @faizalx1337 — Dark Ghost Trace OSINT, 80+ Sites, Breach Intel, Silent Hunt"
 readme = "README.md"
-authors = [{name="faizalx1337", email="faizalx1337@proton.me"}]
+authors = [{name="faizalx1337 — IG: @faizalx1337"}]
 license = {text="MIT"}
 requires-python = ">=3.8"
 dependencies = [

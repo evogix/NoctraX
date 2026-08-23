@@ -1,14 +1,28 @@
 #!/usr/bin/env python3
-import argparse, trio, sys, pathlib
+import argparse, trio, sys, pathlib, signal
 from termcolor import colored
+from colorama import Fore, Style
 from .core import run_noctrax, run_username, run_phone, __version__
 from .banner import show_banner
 from .pipeline import extract_targets, detect_stdin, detect_file_arg
 
+# Graceful Ctrl+C / Ctrl+Z handling
+def _graceful_exit(signum=None, frame=None):
+    print(Fore.YELLOW + Style.BRIGHT + "\n[!] Interrupted — Ctrl+C / Ctrl+Z — exiting cleanly..." + Style.RESET_ALL)
+    print(Fore.CYAN + "  NoctraX v2.2 • IG: @faizalx1337 • github.com/evogix/NoctraX" + Style.RESET_ALL)
+    sys.exit(0)
+
+try:
+    signal.signal(signal.SIGINT, _graceful_exit)
+    if hasattr(signal, "SIGTSTP"):
+        signal.signal(signal.SIGTSTP, _graceful_exit)
+except Exception:
+    pass
+
 def build_parser():
     p = argparse.ArgumentParser(
         prog="noctrax",
-        description=f"NoctraX v{__version__} — VOID SPECTER by @faizalx1337 — Dark Ghost Trace // Email + Username + Phone OSINT + PIPELINE",
+        description=f"NoctraX v{__version__} — VOID SPECTER by Md. Faizal (@faizalx1337) — Dark Ghost Trace // Email + Username + Phone OSINT + PIPELINE",
         epilog="IG: @faizalx1337 | GitHub: github.com/evogix/NoctraX | Pipeline: cat file.txt | noctrax"
     )
     p.add_argument("input", nargs="?", help="Target email OR file path (auto-detect) | or pipe via cat file.txt | noctrax")
@@ -32,7 +46,6 @@ async def run_pipeline(content, args):
         print(colored("[-] No email/phone/username found in input", "red"))
         print(colored("  Hint: file should contain emails like example@gmail.com, phones like +91XXXXXXXXXX, usernames like example_user", "yellow"))
         return
-    # summary
     if not args.silent:
         print(colored(f"\n[*] Pipeline detected: {len(emails)} emails, {len(phones)} phones, {len(usernames)} usernames — total {total} targets", "cyan", attrs=["bold"]))
         if emails:
@@ -42,80 +55,82 @@ async def run_pipeline(content, args):
         if usernames:
             print(colored(f"  Users: {', '.join(usernames[:5])}", "white"))
         print()
-
-    # Run sequentially for each type
     for email in emails:
         print(colored(f"\n{'='*60}", "red"))
         print(colored(f"  [PIPELINE] Email: {email}", "white", attrs=["bold"]))
         print(colored(f"{'='*60}", "red"))
-        await run_noctrax(email, args)
-
+        try:
+            await run_noctrax(email, args)
+        except (KeyboardInterrupt, trio.Cancelled):
+            _graceful_exit()
     for phone in phones:
         print(colored(f"\n{'='*60}", "red"))
         print(colored(f"  [PIPELINE] Phone: {phone}", "white", attrs=["bold"]))
         print(colored(f"{'='*60}", "red"))
-        await run_phone(phone, args)
-
+        try:
+            await run_phone(phone, args)
+        except (KeyboardInterrupt, trio.Cancelled):
+            _graceful_exit()
     for user in usernames:
         print(colored(f"\n{'='*60}", "red"))
         print(colored(f"  [PIPELINE] Username: @{user}", "white", attrs=["bold"]))
         print(colored(f"{'='*60}", "red"))
-        await run_username(user, args)
-
+        try:
+            await run_username(user, args)
+        except (KeyboardInterrupt, trio.Cancelled):
+            _graceful_exit()
     if not args.silent:
         print(colored(f"\n[✓] Pipeline complete — {total} targets scanned", "green", attrs=["bold"]))
-        print(colored(f"  NoctraX v{__version__} • IG: @faizalx1337 • github.com/evogix/NoctraX", "cyan"))
+        print(colored(f"  NoctraX v{__version__} • Md. Faizal • IG: @faizalx1337 • github.com/evogix/NoctraX", "cyan"))
 
 def main():
     parser = build_parser()
     args = parser.parse_args()
     if args.version:
-        print(f"NoctraX v{__version__} by @faizalx1337 — VOID SPECTER // Dark Protocol")
+        print(f"NoctraX v{__version__} by Md. Faizal — VOID SPECTER // Dark Protocol")
         print("  Email: 76 sites + breach + gravatar")
         print("  Username: 50+ sites (GitHub, Insta, X, TikTok, etc)")
         print("  Phone: carrier + region + WhatsApp surface")
         print("  Pipeline: cat file.txt | noctrax (auto-detect mixed)")
         sys.exit(0)
-
     # PIPELINE MODE: stdin piped
     stdin_data = detect_stdin()
     if stdin_data:
-        # stdin has content -> pipeline
         try:
             trio.run(run_pipeline, stdin_data, args)
-        except KeyboardInterrupt:
-            print(colored("\n[!] Interrupted", "red"))
-            sys.exit(0)
+        except (KeyboardInterrupt, trio.Cancelled, EOFError):
+            _graceful_exit()
+        except Exception as e:
+            if "KeyboardInterrupt" in str(type(e)):
+                _graceful_exit()
+            raise
         return
-
     # PIPELINE MODE: input is a file path
     if args.input:
-        # check if input is file
         file_content = detect_file_arg(args.input)
         if file_content is not None:
             try:
                 trio.run(run_pipeline, file_content, args)
-            except KeyboardInterrupt:
-                print(colored("\n[!] Interrupted", "red"))
-                sys.exit(0)
+            except (KeyboardInterrupt, trio.Cancelled, EOFError):
+                _graceful_exit()
             return
-        # not a file, treat as email/username/phone via flags
         if args.username:
-            trio.run(run_username, args.username, args)
+            try:
+                trio.run(run_username, args.username, args)
+            except (KeyboardInterrupt, trio.Cancelled, EOFError):
+                _graceful_exit()
             return
         if args.phone:
-            trio.run(run_phone, args.phone, args)
+            try:
+                trio.run(run_phone, args.phone, args)
+            except (KeyboardInterrupt, trio.Cancelled, EOFError):
+                _graceful_exit()
             return
-        # if input looks like email, run email
-        # single target mode (backward compat)
         try:
             trio.run(run_noctrax, args.input, args)
-        except KeyboardInterrupt:
-            print(colored("\n[!] Interrupted", "red"))
-            sys.exit(0)
+        except (KeyboardInterrupt, trio.Cancelled, EOFError):
+            _graceful_exit()
         return
-
-    # Flags alone
     try:
         if args.username:
             trio.run(run_username, args.username, args)
@@ -131,9 +146,8 @@ def main():
             print(colored("  → cat file.txt | noctrax --only-used  (auto pipeline)", "cyan"))
             print(colored("  → noctrax targets.txt --only-used  (file pipeline)", "cyan"))
             sys.exit(1)
-    except KeyboardInterrupt:
-        print(colored("\n[!] Interrupted", "red"))
-        sys.exit(0)
+    except (KeyboardInterrupt, trio.Cancelled, EOFError):
+        _graceful_exit()
 
 if __name__ == "__main__":
     main()

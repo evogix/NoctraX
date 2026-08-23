@@ -9,7 +9,7 @@ from .sites_db import get_all_native_checkers, get_site_count
 from .username_db import run_username_scan, USERNAME_SITES
 from .phone_db import phone_intel, format_phone_info
 
-__version__ = "2.1"
+__version__ = "2.2"
 
 EMAIL_RE = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
@@ -55,7 +55,7 @@ def print_noctrax(data, email, start_time, total_checked, args, breach_info=None
         print()
         print(c(f"  ✔ {len(found)} FOUND  ", "green") + c(f"• {notfound} not found • {len(rate)} rate-limit", "dark_grey") + c(f" • {total_checked} checked in {round(time.time()-start_time,2)}s", "white"))
         print(c("  ──────────────────────────────────────────────", "red"))
-        print(c("  NoctraX v2.1  •  IG: @faizalx1337  •  github.com/evogix/NoctraX", "cyan"))
+        print(c("  NoctraX v2.2  •  IG: @faizalx1337  •  github.com/evogix/NoctraX", "cyan"))
     if args.csv_out:
         import csv, datetime
         ts = int(datetime.datetime.now().timestamp())
@@ -106,7 +106,7 @@ def print_username(data, username, start_time, args):
         print()
         print(c(f"  ✔ {len(found)} FOUND  ", "green") + c(f"• {len(data)-len(found)-len(rate)} not found • {len(rate)} rate-limit", "dark_grey") + c(f" • {len(data)} checked in {round(time.time()-start_time,2)}s", "white"))
         print(c("  ──────────────────────────────────────────────", "red"))
-        print(c("  NoctraX v2.1 — Username Hunt • IG: @faizalx1337", "cyan"))
+        print(c("  NoctraX v2.2 — Username Hunt • IG: @faizalx1337", "cyan"))
     if args.csv_out:
         import csv, datetime
         ts = int(datetime.datetime.now().timestamp())
@@ -152,7 +152,7 @@ def print_phone(info, surface, phone, start_time, args):
             else:
                 print(c(f"[?] {plat:<15}  {s.get('note','')}", "yellow"))
         print()
-        print(c(f"  ⏱  {round(time.time()-start_time,2)}s  •  NoctraX v2.1 — Phone Intel • IG: @faizalx1337", "dark_grey"))
+        print(c(f"  ⏱  {round(time.time()-start_time,2)}s  •  NoctraX v2.2 — Phone Intel • IG: @faizalx1337", "dark_grey"))
 
 async def run_noctrax(email, args):
     start = time.time()

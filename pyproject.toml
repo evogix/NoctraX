@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "noctrax"
-version = "2.0.0"
-description = "NoctraX VOID SPECTER by @faizalx1337 — Dark Ghost Trace OSINT, 80+ Sites, Breach Intel, Silent Hunt"
+version = "2.1.0"
+description = "NoctraX v2.1 VOID SPECTER by @faizalx1337 — Dark Ghost Trace OSINT, 80+ Sites, Breach Intel, Silent Hunt"
 readme = "README.md"
 authors = [{name="faizalx1337", email="faizalx1337@proton.me"}]
 license = {text="MIT"}
@@ -16,7 +16,8 @@ dependencies = [
   "beautifulsoup4>=4.12.0",
   "termcolor>=2.3.0",
   "colorama>=0.4.6",
-  "tqdm>=4.65.0"
+  "tqdm>=4.65.0",
+  "phonenumbers>=8.13.0"
 ]
 keywords = ["osint", "dark", "noctrax", "faizalx1337", "ghost", "void", "hacker"]
 

@@ -1,5 +1,5 @@
 # NoctraX — by @faizalx1337
-### Specter in the Void • Ghost Email Hunter
+### WE SEE WHAT YOU TRY TO HIDE
 
 ```
 ███╗   ██╗  ██████╗   ██████╗ ████████╗██████╗  █████╗ ██╗  ██╗
@@ -8,35 +8,40 @@
 ██║╚██╗██║ ██║   ██║ ██║         ██║   ██╔══██╗██╔══██║ ██╔██╗ 
 ██║ ╚████║ ╚██████╔╝ ╚██████╗    ██║   ██║  ██║██║  ██║██╔╝ ██╗
 ╚═╝  ╚═══╝  ╚═════╝   ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
-  Specter in the Void  •  by @faizalx1337  •  v2.0-dark
-  IG: @faizalx1337 | GitHub: github.com/evogix | GitHub: github.com/evogix/NoctraX
+  Specter in the Void  •  by @faizalx1337  •  v2.1-dark
+  WE SEE WHAT YOU TRY TO HIDE
+  IG: @faizalx1337 | GitHub: github.com/evogix/NoctraX
 ```
 
-**Dark Void Protocol — 150+ global + 30 Indian sites + breach intel + gravatar + silent mode**
+**NoctraX v2.1 — Dark Ghost Trace OSINT**
+- **Email**: 76 sites + breach (xposedornot) + gravatar → `noctrax email@gmail.com`
+- **Username**: 50+ sites (GitHub, Insta, X, TikTok, Reddit, etc) → `noctrax --username faizalx1337`
+- **Phone**: carrier + region + WhatsApp surface → `noctrax --phone +919876543210`
 
 ### Install
 ```bash
 pip install -e .
-noctrax technicalsagar@gmail.com
+noctrax --help
 ```
 
 ### Usage
 ```bash
-noctrax email@gmail.com                    # full scan
-noctrax email@gmail.com --only-used        # only FOUND
-noctrax email@gmail.com --silent           # clean output (output hata ke)
-noctrax email@gmail.com --silent --json    # JSON for piping
-noctrax email@gmail.com --csv --json
-noctrax email@gmail.com --timeout 15
+# Email
+noctrax technicalsagar@gmail.com --only-used
+noctrax test@gmail.com --silent --json
+
+# Username
+noctrax --username faizalx1337 --only-used
+noctrax --username target --silent --json
+
+# Phone
+noctrax --phone +919022483962
+noctrax --phone +919876543210 --json
 ```
 
 ### Features
-- 350+ sites (Void Archive + 30 Indian: Flipkart, Paytm, Naukri, Zomato, Swiggy, IRCTC, etc)
-- Breach check via xposedornot (no API key)
-- Gravatar profile leak
-- Silent mode — only [+] FOUND
+- 100% Native — No dependencies on other OSINT tools
+- Dark hacker UI — WE SEE WHAT YOU TRY TO HIDE
+- Silent mode — only FOUND
 - CSV/JSON export
-- Dark hacker UI — red/black theme by @faizalx1337
-
-### Tagline
-`Specter in the Void` — IG: @faizalx1337
+- IG: @faizalx1337 | GitHub: github.com/evogix/NoctraX

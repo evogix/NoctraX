@@ -1,23 +1,27 @@
 from termcolor import colored
+from colorama import init, Fore, Back, Style
+init(autoreset=True)
 
 BANNER = r"""
-███╗   ██╗  ██████╗   ██████╗ ████████╗██████╗  █████╗ ██╗  ██╗
-████╗  ██║ ██═══██╗ ██╔════╝ ╚══██╔══╝██╔══██╗██╔══██╗╚██╗██╔╝
-██╔██╗ ██║ ██║   ██║ ██║         ██║   ██████╔╝███████║ ╚███╔╝ 
-██║╚██╗██║ ██║   ██║ ██║         ██║   ██╔══██╗██╔══██║ ██╔██╗ 
-██║ ╚████║ ╚██████╔╝ ╚██████╗    ██║   ██║  ██║██║  ██║██╔╝ ██╗
-╚═╝  ╚═══╝  ╚═════╝   ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+ ███╗   ██╗  ██████╗   ██████╗ ████████╗██████╗  █████╗ ██╗  ██╗
+ ████╗  ██║ ██╔═══██╗ ██╔════╝ ╚══██╔══╝██╔══██╗██╔══██╗╚██╗██╔╝
+ ██╔██╗ ██║ ██║   ██║ ██║         ██║   ██████╔╝███████║ ╚███╔╝ 
+ ██║╚██╗██║ ██║   ██║ ██║         ██║   ██╔══██╗██╔══██║ ██╔██╗ 
+ ██║ ╚████║ ╚██████╔╝ ╚██████╗    ██║   ██║  ██║██║  ██║██╔╝ ██╗
+ ╚═╝  ╚═══╝  ╚═════╝   ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
 """
 
-TAGLINE = "Specter in the Void  \u2022  by @faizalx1337  \u2022  v2.0-dark"
+TAGLINE = "Specter in the Void  •  by Md. Faizal (@faizalx1337)  •  v2.2"
 SUBTAG  = "WE SEE WHAT YOU TRY TO HIDE"
 
 def show_banner(silent=False):
     if silent:
         return
-    print(colored(BANNER, "red", attrs=["bold"]))
-    print(colored(f"  {TAGLINE}", "white", attrs=["bold"]))
-    print(colored(f"  {SUBTAG}", "red", attrs=["bold"]))
-    print(colored("  \u2500"*25, "dark_grey"))
-    print(colored("  IG: @faizalx1337  |  GitHub: github.com/evogix/NoctraX", "cyan"))
+    # Professional hacker gradient: red banner + neon accents
+    print(Fore.RED + Style.BRIGHT + BANNER + Style.RESET_ALL)
+    print(Fore.WHITE + Style.BRIGHT + f"  {TAGLINE}" + Style.RESET_ALL)
+    print(Fore.RED + Style.BRIGHT + f"  {SUBTAG}" + Style.RESET_ALL)
+    print(Fore.BLACK + Style.BRIGHT + "  " + "─" * 52 + Style.RESET_ALL)
+    print(Fore.CYAN + Style.BRIGHT + "  ◆ IG: " + Fore.WHITE + "@faizalx1337  " + Fore.CYAN + "◆ GitHub: " + Fore.WHITE + "github.com/evogix/NoctraX  " + Fore.CYAN + "◆ v2.2" + Style.RESET_ALL)
+    print(Fore.BLACK + Style.BRIGHT + "  " + "─" * 52 + Style.RESET_ALL)
     print()

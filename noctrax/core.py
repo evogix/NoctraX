@@ -1,8 +1,10 @@
-"""NoctraX Core - VOID DARK ENGINE by @faizalx1337 — Specter Protocol"""
+"""NoctraX Core - VOID DARK ENGINE by Md. Faizal (@faizalx1337) — Specter Protocol"""
 import time, re, json, sys
 import httpx
 import trio
 from termcolor import colored
+from colorama import init as colorama_init, Fore, Style
+colorama_init(autoreset=True)
 from .banner import show_banner
 from .breach import check_breach, check_gravatar
 from .sites_db import get_all_native_checkers, get_site_count
@@ -16,26 +18,32 @@ EMAIL_RE = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 def is_email(s):
     return bool(re.fullmatch(EMAIL_RE, s))
 
+def cprint(text, color="white", bright=False, no_color=False):
+    if no_color:
+        return text
+    col = getattr(Fore, color.upper(), Fore.WHITE) if hasattr(Fore, color.upper()) else Fore.WHITE
+    style = Style.BRIGHT if bright else ""
+    return col + style + text + Style.RESET_ALL
+
 def print_noctrax(data, email, start_time, total_checked, args, breach_info=None, gravatar_info=None):
-    def c(text, color):
-        if args.no_color:
-            return text
-        return colored(text, color)
+    no_col = args.no_color
     if not args.silent and not args.no_clear:
         print("\033[H\033[J", end="")
     if not args.silent:
-        print(c("═" * 60, "red"))
-        pad = " " * ((60 - len(email) - 6)//2)
-        print(c(f"{pad}▶ {email} ◀", "white"))
+        # Pro header - hacker box
+        print(Fore.RED + Style.BRIGHT + "  ╔" + "═"*58 + "╗" + Style.RESET_ALL if not no_col else "  ╔" + "═"*58 + "╗")
+        pad = " " * ((58 - len(email) - 4)//2)
+        print(cprint(f"  ║{pad} ► {email} ◄{pad}║", "white", True, no_col))
+        print(Fore.RED + Style.BRIGHT + "  ╚" + "═"*58 + "╝" + Style.RESET_ALL if not no_col else "  ╚" + "═"*58 + "╝")
         if breach_info:
             if breach_info.get("breached"):
                 src = ", ".join(breach_info["sources"][:5])
-                print(c(f"  ☠️  BREACHED: {src} (+{len(breach_info['sources'])})", "red"))
+                print(Fore.RED + Style.BRIGHT + f"  ☠  BREACHED: {src} [+{len(breach_info['sources'])} leaks]" + Style.RESET_ALL if not no_col else f"  BREACHED: {src}")
             else:
-                print(c("  ✅ No public breach (xposedornot)", "green"))
+                print(Fore.GREEN + f"  ✔  No public breach (xposedornot)" + Style.RESET_ALL if not no_col else "  No breach")
         if gravatar_info and gravatar_info.get("found"):
-            print(c(f"  👤 Gravatar: {gravatar_info.get('profile')}", "cyan"))
-        print(c("═" * 60, "red"))
+            print(Fore.CYAN + f"  ● Gravatar: {gravatar_info.get('profile')}" + Style.RESET_ALL if not no_col else f"  Gravatar: {gravatar_info.get('profile')}")
+        print(Fore.BLACK + Style.BRIGHT + "  ─" * 60 + Style.RESET_ALL if not no_col else "  " + "-"*60)
     found = [d for d in data if d.get("exists")]
     rate = [d for d in data if d.get("rateLimit")]
     notfound = len(data) - len(found) - len(rate)
@@ -43,19 +51,19 @@ def print_noctrax(data, email, start_time, total_checked, args, breach_info=None
     for r in data:
         dom = r["domain"]
         if r.get("rateLimit") and show_all and not args.silent:
-            print(c(f"[x] {dom:<25}  rate-limited", "yellow"))
+            print(Fore.YELLOW + f"  [×] {dom:<26}  rate-limited" + Style.RESET_ALL if not no_col else f"  [x] {dom} rate-limited")
         elif r.get("exists"):
             extra = ""
             if r.get("emailrecovery"):
                 extra += f" {r['emailrecovery']}"
-            print(c(f"[+] {dom:<25}  FOUND{extra}", "green"))
+            print(Fore.GREEN + Style.BRIGHT + f"  [+] {dom:<26}  ● FOUND{extra}" + Style.RESET_ALL if not no_col else f"  [+] {dom} FOUND")
         elif show_all and not args.silent:
-            print(c(f"[-] {dom:<25}  not found", "magenta"))
+            print(Fore.MAGENTA + Style.DIM + f"  [-] {dom:<26}  not found" + Style.RESET_ALL if not no_col else f"  [-] {dom} not found")
     if not args.json_out and not args.csv_out and not args.silent:
         print()
-        print(c(f"  ✔ {len(found)} FOUND  ", "green") + c(f"• {notfound} not found • {len(rate)} rate-limit", "dark_grey") + c(f" • {total_checked} checked in {round(time.time()-start_time,2)}s", "white"))
-        print(c("  ──────────────────────────────────────────────", "red"))
-        print(c("  NoctraX v2.2  •  IG: @faizalx1337  •  github.com/evogix/NoctraX", "cyan"))
+        print(Fore.GREEN + Style.BRIGHT + f"  ✔ {len(found)} FOUND" + Style.RESET_ALL + Fore.WHITE + f"  •  {notfound} not found" + Fore.YELLOW + f" • {len(rate)} rate-limit" + Fore.CYAN + f"  •  {total_checked} checked in {round(time.time()-start_time,2)}s" + Style.RESET_ALL if not no_col else f"  {len(found)} FOUND • {notfound} not found • {len(rate)} rate-limit • {total_checked} checked")
+        print(Fore.RED + "  ──────────────────────────────────────────────────────" + Style.RESET_ALL if not no_col else "  " + "-"*54)
+        print(Fore.CYAN + Style.BRIGHT + "  ◆ NoctraX v2.2  " + Fore.WHITE + "•  " + Fore.CYAN + "Md. Faizal  " + Fore.WHITE + "•  " + Fore.CYAN + "IG: @faizalx1337  " + Fore.WHITE + "•  " + Fore.CYAN + "github.com/evogix/NoctraX" + Style.RESET_ALL if not no_col else "  NoctraX v2.2 • Md. Faizal • @faizalx1337 • github.com/evogix/NoctraX")
     if args.csv_out:
         import csv, datetime
         ts = int(datetime.datetime.now().timestamp())
@@ -65,7 +73,7 @@ def print_noctrax(data, email, start_time, total_checked, args, breach_info=None
                 w = csv.DictWriter(f, fieldnames=data[0].keys())
                 w.writeheader()
                 w.writerows(data)
-        print(c(f"\n[→] CSV: {fname}", "cyan"))
+        print(Fore.CYAN + f"\n  → CSV: {fname}" + Style.RESET_ALL if not no_col else f" CSV:{fname}")
     if args.json_out:
         import datetime
         ts = int(datetime.datetime.now().timestamp())
@@ -73,23 +81,20 @@ def print_noctrax(data, email, start_time, total_checked, args, breach_info=None
         payload = {"email": email, "breach": breach_info, "gravatar": gravatar_info, "elapsed": round(time.time()-start_time,2), "found": found, "all": data}
         with open(fname, 'w', encoding='utf8') as f:
             json.dump(payload, f, indent=2)
-        print(c(f"[→] JSON: {fname}", "cyan"))
+        print(Fore.CYAN + f"  → JSON: {fname}" + Style.RESET_ALL if not no_col else f" JSON:{fname}")
         if args.silent:
             print(json.dumps(payload, indent=2))
 
 def print_username(data, username, start_time, args):
-    def c(text, color):
-        if args.no_color:
-            return text
-        return colored(text, color)
+    no_col = args.no_color
     if not args.silent and not args.no_clear:
         print("\033[H\033[J", end="")
     if not args.silent:
-        print(c("═" * 60, "red"))
-        pad = " " * ((60 - len(username) - 6)//2)
-        print(c(f"{pad}▶ @{username} ◀", "white"))
-        print(colored("  WE SEE WHAT YOU TRY TO HIDE", "red", attrs=["bold"]))
-        print(c("═" * 60, "red"))
+        print(Fore.RED + Style.BRIGHT + "  ╔" + "═"*58 + "╗" + Style.RESET_ALL if not no_col else "  ╔" + "═"*58 + "╗")
+        pad = " " * ((58 - len(username) - 6)//2)
+        print(cprint(f"  ║{pad} ► @{username} ◄{pad}║", "white", True, no_col))
+        print(Fore.RED + Style.BRIGHT + "  ║" + " "*18 + "WE SEE WHAT YOU TRY TO HIDE" + " "*15 + "║" + Style.RESET_ALL if not no_col else f"  WE SEE WHAT YOU TRY TO HIDE")
+        print(Fore.RED + Style.BRIGHT + "  ╚" + "═"*58 + "╝" + Style.RESET_ALL if not no_col else "  ╚" + "═"*58 + "╝")
     found = [d for d in data if d.get("exists")]
     rate = [d for d in data if d.get("rateLimit")]
     show_all = not args.only_used
@@ -97,16 +102,16 @@ def print_username(data, username, start_time, args):
         dom = r["domain"]
         url = r.get("url", "")
         if r.get("rateLimit") and show_all and not args.silent:
-            print(c(f"[x] {dom:<20}  rate-limited", "yellow"))
+            print(Fore.YELLOW + f"  [×] {dom:<22}  rate-limited" + Style.RESET_ALL if not no_col else f"  [x] {dom} rate-limited")
         elif r.get("exists"):
-            print(c(f"[+] {dom:<20}  FOUND  → {url}", "green"))
+            print(Fore.GREEN + Style.BRIGHT + f"  [+] {dom:<22}  ● FOUND  → " + Fore.CYAN + f"{url}" + Style.RESET_ALL if not no_col else f"  [+] {dom} FOUND -> {url}")
         elif show_all and not args.silent:
-            print(c(f"[-] {dom:<20}  not found", "magenta"))
+            print(Fore.MAGENTA + Style.DIM + f"  [-] {dom:<22}  not found" + Style.RESET_ALL if not no_col else f"  [-] {dom} not found")
     if not args.json_out and not args.csv_out and not args.silent:
         print()
-        print(c(f"  ✔ {len(found)} FOUND  ", "green") + c(f"• {len(data)-len(found)-len(rate)} not found • {len(rate)} rate-limit", "dark_grey") + c(f" • {len(data)} checked in {round(time.time()-start_time,2)}s", "white"))
-        print(c("  ──────────────────────────────────────────────", "red"))
-        print(c("  NoctraX v2.2 — Username Hunt • IG: @faizalx1337", "cyan"))
+        print(Fore.GREEN + Style.BRIGHT + f"  ✔ {len(found)} FOUND" + Style.RESET_ALL + Fore.WHITE + f"  •  {len(data)-len(found)-len(rate)} not found" + Fore.YELLOW + f" • {len(rate)} rate-limit" + Fore.CYAN + f"  •  {len(data)} checked in {round(time.time()-start_time,2)}s" + Style.RESET_ALL if not no_col else f"  {len(found)} FOUND")
+        print(Fore.RED + "  ──────────────────────────────────────────────────────" + Style.RESET_ALL if not no_col else "  " + "-"*54)
+        print(Fore.CYAN + Style.BRIGHT + "  ◆ NoctraX v2.2 — Username Hunt  " + Fore.WHITE + "•" + Fore.CYAN + "  Md. Faizal  " + Fore.WHITE + "•" + Fore.CYAN + "  @faizalx1337" + Style.RESET_ALL if not no_col else "  Username Hunt • Md. Faizal")
     if args.csv_out:
         import csv, datetime
         ts = int(datetime.datetime.now().timestamp())
@@ -116,7 +121,7 @@ def print_username(data, username, start_time, args):
                 w = csv.DictWriter(f, fieldnames=data[0].keys())
                 w.writeheader()
                 w.writerows(data)
-        print(c(f"\n[→] CSV: {fname}", "cyan"))
+        print(Fore.CYAN + f"\n  → CSV: {fname}" + Style.RESET_ALL if not no_col else f" CSV:{fname}")
     if args.json_out:
         import datetime
         ts = int(datetime.datetime.now().timestamp())
@@ -124,35 +129,32 @@ def print_username(data, username, start_time, args):
         payload = {"username": username, "elapsed": round(time.time()-start_time,2), "found": found, "all": data}
         with open(fname, 'w', encoding='utf8') as f:
             json.dump(payload, f, indent=2)
-        print(c(f"[→] JSON: {fname}", "cyan"))
+        print(Fore.CYAN + f"  → JSON: {fname}" + Style.RESET_ALL if not no_col else f" JSON:{fname}")
         if args.silent:
             print(json.dumps(payload, indent=2))
 
 def print_phone(info, surface, phone, start_time, args):
-    def c(text, color):
-        if args.no_color:
-            return text
-        return colored(text, color)
+    no_col = args.no_color
     if not args.silent and not args.no_clear:
         print("\033[H\033[J", end="")
     if not args.silent:
-        print(c("═" * 60, "red"))
-        pad = " " * ((60 - len(phone) - 6)//2)
-        print(c(f"{pad}▶ {phone} ◀", "white"))
-        print(colored("  WE SEE WHAT YOU TRY TO HIDE", "red", attrs=["bold"]))
-        print(c("═" * 60, "red"))
-        print(c(format_phone_info(info), "cyan"))
-        print(c("─" * 60, "dark_grey"))
+        print(Fore.RED + Style.BRIGHT + "  ╔" + "═"*58 + "╗" + Style.RESET_ALL if not no_col else "  ╔" + "═"*58 + "╗")
+        pad = " " * ((58 - len(phone) - 4)//2)
+        print(cprint(f"  ║{pad} ► {phone} ◄{pad}║", "white", True, no_col))
+        print(Fore.RED + Style.BRIGHT + "  ║" + " "*18 + "WE SEE WHAT YOU TRY TO HIDE" + " "*15 + "║" + Style.RESET_ALL if not no_col else f"  WE SEE WHAT YOU TRY TO HIDE")
+        print(Fore.RED + Style.BRIGHT + "  ╚" + "═"*58 + "╝" + Style.RESET_ALL if not no_col else "  ╚" + "═"*58 + "╝")
+        print(Fore.CYAN + Style.BRIGHT + format_phone_info(info) + Style.RESET_ALL if not no_col else format_phone_info(info))
+        print(Fore.BLACK + Style.BRIGHT + "  ─" * 60 + Style.RESET_ALL if not no_col else "  " + "-"*60)
         for s in surface:
             plat = s.get("platform", "")
             if s.get("exists") is True:
-                print(c(f"[+] {plat:<15}  FOUND → {s.get('url','')}", "green"))
+                print(Fore.GREEN + Style.BRIGHT + f"  [+] {plat:<15}  ● FOUND → " + Fore.CYAN + f"{s.get('url','')}" + Style.RESET_ALL if not no_col else f"  [+] {plat} FOUND")
             elif s.get("exists") is False:
-                print(c(f"[-] {plat:<15}  not found", "magenta"))
+                print(Fore.MAGENTA + Style.DIM + f"  [-] {plat:<15}  not found" + Style.RESET_ALL if not no_col else f"  [-] {plat} not found")
             else:
-                print(c(f"[?] {plat:<15}  {s.get('note','')}", "yellow"))
+                print(Fore.YELLOW + f"  [?] {plat:<15}  {s.get('note','')}" + Style.RESET_ALL if not no_col else f"  [?] {plat} {s.get('note','')}")
         print()
-        print(c(f"  ⏱  {round(time.time()-start_time,2)}s  •  NoctraX v2.2 — Phone Intel • IG: @faizalx1337", "dark_grey"))
+        print(Fore.CYAN + f"  ⏱  {round(time.time()-start_time,2)}s  •  NoctraX v2.2 — Phone Intel  •  Md. Faizal • @faizalx1337" + Style.RESET_ALL if not no_col else f"  {round(time.time()-start_time,2)}s • Phone Intel")
 
 async def run_noctrax(email, args):
     start = time.time()
@@ -208,9 +210,6 @@ async def run_phone(phone, args):
     surface = []
     async with httpx.AsyncClient(limits=limits, timeout=timeout, follow_redirects=True) as client:
         info, surface = await phone_intel(phone, client, out)
-    # out currently holds phone_intel entry, we need to extract
-    # phone_intel appends to out, but we want to print via print_phone
-    # out[0] contains info
     if out and out[0].get("type") == "phone_intel":
         info = out[0]["info"]
         surface = out[0]["surface"]

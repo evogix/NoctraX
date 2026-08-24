@@ -29,7 +29,7 @@
 
 | Module | What it does | Sites |
 |--------|--------------|-------|
-| **Email** | 76 sites + breach (xposedornot) + Gravatar | Spotify, GitHub, X, Paytm, Flipkart, etc |
+| **Email** | 121 sites + breach (xposedornot) + Gravatar | Spotify, GitHub, X, Paytm, Flipkart, etc |
 | **Username** | 50+ socials/profile hunt | GitHub, Insta, X, TikTok, Reddit, HTB, etc |
 | **Phone** | Carrier + Region + WhatsApp + Timezone | Airtel/Jio/Vi + WA surface |
 | **Pipeline** | `cat file.txt \| noctrax` auto-detect mixed | Email + Phone + Username one shot |

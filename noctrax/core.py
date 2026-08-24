@@ -7,11 +7,11 @@ from colorama import init as colorama_init, Fore, Style
 colorama_init(autoreset=True)
 from .banner import show_banner
 from .breach import check_breach, check_gravatar
-from .sites_db import get_all_native_checkers, get_site_count
+from .sites_accurate import get_accurate_checkers, get_accurate_count
 from .username_db import run_username_scan, USERNAME_SITES
 from .phone_db import phone_intel, format_phone_info
 
-__version__ = "2.2"
+__version__ = "2.3"
 
 EMAIL_RE = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
@@ -63,7 +63,7 @@ def print_noctrax(data, email, start_time, total_checked, args, breach_info=None
         print()
         print(Fore.GREEN + Style.BRIGHT + f"  ✔ {len(found)} FOUND" + Style.RESET_ALL + Fore.WHITE + f"  •  {notfound} not found" + Fore.YELLOW + f" • {len(rate)} rate-limit" + Fore.CYAN + f"  •  {total_checked} checked in {round(time.time()-start_time,2)}s" + Style.RESET_ALL if not no_col else f"  {len(found)} FOUND • {notfound} not found • {len(rate)} rate-limit • {total_checked} checked")
         print(Fore.RED + "  ──────────────────────────────────────────────────────" + Style.RESET_ALL if not no_col else "  " + "-"*54)
-        print(Fore.CYAN + Style.BRIGHT + "  ◆ NoctraX v2.2  " + Fore.WHITE + "•  " + Fore.CYAN + "Md. Faizal  " + Fore.WHITE + "•  " + Fore.CYAN + "IG: @faizalx1337  " + Fore.WHITE + "•  " + Fore.CYAN + "github.com/evogix/NoctraX" + Style.RESET_ALL if not no_col else "  NoctraX v2.2 • Md. Faizal • @faizalx1337 • github.com/evogix/NoctraX")
+        print(Fore.CYAN + Style.BRIGHT + "  ◆ NoctraX v2.3  " + Fore.WHITE + "•  " + Fore.CYAN + "Md. Faizal  " + Fore.WHITE + "•  " + Fore.CYAN + "IG: @faizalx1337  " + Fore.WHITE + "•  " + Fore.CYAN + "github.com/evogix/NoctraX" + Style.RESET_ALL if not no_col else "  NoctraX v2.3 • Md. Faizal • @faizalx1337 • github.com/evogix/NoctraX")
     if args.csv_out:
         import csv, datetime
         ts = int(datetime.datetime.now().timestamp())
@@ -111,7 +111,7 @@ def print_username(data, username, start_time, args):
         print()
         print(Fore.GREEN + Style.BRIGHT + f"  ✔ {len(found)} FOUND" + Style.RESET_ALL + Fore.WHITE + f"  •  {len(data)-len(found)-len(rate)} not found" + Fore.YELLOW + f" • {len(rate)} rate-limit" + Fore.CYAN + f"  •  {len(data)} checked in {round(time.time()-start_time,2)}s" + Style.RESET_ALL if not no_col else f"  {len(found)} FOUND")
         print(Fore.RED + "  ──────────────────────────────────────────────────────" + Style.RESET_ALL if not no_col else "  " + "-"*54)
-        print(Fore.CYAN + Style.BRIGHT + "  ◆ NoctraX v2.2 — Username Hunt  " + Fore.WHITE + "•" + Fore.CYAN + "  Md. Faizal  " + Fore.WHITE + "•" + Fore.CYAN + "  @faizalx1337" + Style.RESET_ALL if not no_col else "  Username Hunt • Md. Faizal")
+        print(Fore.CYAN + Style.BRIGHT + "  ◆ NoctraX v2.3 — Username Hunt  " + Fore.WHITE + "•" + Fore.CYAN + "  Md. Faizal  " + Fore.WHITE + "•" + Fore.CYAN + "  @faizalx1337" + Style.RESET_ALL if not no_col else "  Username Hunt • Md. Faizal")
     if args.csv_out:
         import csv, datetime
         ts = int(datetime.datetime.now().timestamp())
@@ -154,7 +154,7 @@ def print_phone(info, surface, phone, start_time, args):
             else:
                 print(Fore.YELLOW + f"  [?] {plat:<15}  {s.get('note','')}" + Style.RESET_ALL if not no_col else f"  [?] {plat} {s.get('note','')}")
         print()
-        print(Fore.CYAN + f"  ⏱  {round(time.time()-start_time,2)}s  •  NoctraX v2.2 — Phone Intel  •  Md. Faizal • @faizalx1337" + Style.RESET_ALL if not no_col else f"  {round(time.time()-start_time,2)}s • Phone Intel")
+        print(Fore.CYAN + f"  ⏱  {round(time.time()-start_time,2)}s  •  NoctraX v2.3 — Phone Intel  •  Md. Faizal • @faizalx1337" + Style.RESET_ALL if not no_col else f"  {round(time.time()-start_time,2)}s • Phone Intel")
 
 async def run_noctrax(email, args):
     start = time.time()
@@ -168,8 +168,8 @@ async def run_noctrax(email, args):
     out = []
     breach_info = None
     gravatar_info = None
-    checkers = get_all_native_checkers()
-    total = get_site_count()
+    checkers = get_accurate_checkers()
+    total = get_accurate_count()
     async with httpx.AsyncClient(limits=limits, timeout=timeout, headers=headers, follow_redirects=True) as client:
         if not args.no_breach:
             try:

@@ -1,4 +1,4 @@
-"""NoctraX Core - VOID DARK ENGINE by Md. Faizal (@faizalx1337) — Specter Protocol"""
+"""NoctraX Core — Professional OSINT by Md. Faizal"""
 import time, re, json, sys
 import httpx
 import trio
@@ -93,7 +93,7 @@ def print_username(data, username, start_time, args):
         print(Fore.RED + Style.BRIGHT + "  ╔" + "═"*58 + "╗" + Style.RESET_ALL if not no_col else "  ╔" + "═"*58 + "╗")
         pad = " " * ((58 - len(username) - 6)//2)
         print(cprint(f"  ║{pad} ► @{username} ◄{pad}║", "white", True, no_col))
-        print(Fore.RED + Style.BRIGHT + "  ║" + " "*18 + "WE SEE WHAT YOU TRY TO HIDE" + " "*15 + "║" + Style.RESET_ALL if not no_col else f"  WE SEE WHAT YOU TRY TO HIDE")
+        print(Fore.RED + Style.BRIGHT + "  ║" + " "*18 + "Professional OSINT" + " "*15 + "║" + Style.RESET_ALL if not no_col else f"  Professional OSINT")
         print(Fore.RED + Style.BRIGHT + "  ╚" + "═"*58 + "╝" + Style.RESET_ALL if not no_col else "  ╚" + "═"*58 + "╝")
     found = [d for d in data if d.get("exists")]
     rate = [d for d in data if d.get("rateLimit")]
@@ -141,7 +141,7 @@ def print_phone(info, surface, phone, start_time, args):
         print(Fore.RED + Style.BRIGHT + "  ╔" + "═"*58 + "╗" + Style.RESET_ALL if not no_col else "  ╔" + "═"*58 + "╗")
         pad = " " * ((58 - len(phone) - 4)//2)
         print(cprint(f"  ║{pad} ► {phone} ◄{pad}║", "white", True, no_col))
-        print(Fore.RED + Style.BRIGHT + "  ║" + " "*18 + "WE SEE WHAT YOU TRY TO HIDE" + " "*15 + "║" + Style.RESET_ALL if not no_col else f"  WE SEE WHAT YOU TRY TO HIDE")
+        print(Fore.RED + Style.BRIGHT + "  ║" + " "*18 + "Professional OSINT" + " "*15 + "║" + Style.RESET_ALL if not no_col else f"  Professional OSINT")
         print(Fore.RED + Style.BRIGHT + "  ╚" + "═"*58 + "╝" + Style.RESET_ALL if not no_col else "  ╚" + "═"*58 + "╝")
         print(Fore.CYAN + Style.BRIGHT + format_phone_info(info) + Style.RESET_ALL if not no_col else format_phone_info(info))
         print(Fore.BLACK + Style.BRIGHT + "  ─" * 60 + Style.RESET_ALL if not no_col else "  " + "-"*60)

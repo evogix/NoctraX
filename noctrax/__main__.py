@@ -22,7 +22,7 @@ except Exception:
 def build_parser():
     p = argparse.ArgumentParser(
         prog="noctrax",
-        description=f"NoctraX v{__version__} — VOID SPECTER by Md. Faizal (@faizalx1337) — Dark Ghost Trace // Email + Username + Phone OSINT + PIPELINE",
+        description=f"NoctraX v{__version__} — Professional OSINT by Md. Faizal (@faizalx1337) — Professional OSINT // Email + Username + Phone OSINT + PIPELINE",
         epilog="IG: @faizalx1337 | GitHub: github.com/evogix/NoctraX | Pipeline: cat file.txt | noctrax"
     )
     p.add_argument("input", nargs="?", help="Target email OR file path (auto-detect) | or pipe via cat file.txt | noctrax")
@@ -87,7 +87,7 @@ def main():
     parser = build_parser()
     args = parser.parse_args()
     if args.version:
-        print(f"NoctraX v{__version__} by Md. Faizal — VOID SPECTER // Dark Protocol")
+        print(f"NoctraX v{__version__} by Md. Faizal — Professional OSINT // Dark Protocol")
         print("  Email: 76 sites + breach + gravatar")
         print("  Username: 50+ sites (GitHub, Insta, X, TikTok, etc)")
         print("  Phone: carrier + region + WhatsApp surface")

@@ -16,7 +16,7 @@ SUBTAG  = "WE SEE WHAT YOU TRY TO HIDE"
 def show_banner(silent=False):
     if silent:
         return
-    print(Fore.CYAN + Style.BRIGHT + BANNER + Style.RESET_ALL)
+    print(Fore.RED + Style.BRIGHT + BANNER + Style.RESET_ALL)
     print(Fore.WHITE + Style.BRIGHT + f"  {TAGLINE}" + Style.RESET_ALL)
     print(Fore.RED + Style.BRIGHT + f"  {SUBTAG}" + Style.RESET_ALL)
     print(Fore.BLACK + Style.BRIGHT + "  " + "─" * 52 + Style.RESET_ALL)

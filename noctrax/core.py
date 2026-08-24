@@ -37,8 +37,15 @@ def print_noctrax(data, email, start_time, total_checked, args, breach_info=None
         print(Fore.RED + Style.BRIGHT + "  ╚" + "═"*58 + "╝" + Style.RESET_ALL if not no_col else "  ╚" + "═"*58 + "╝")
         if breach_info:
             if breach_info.get("breached"):
-                src = ", ".join(breach_info["sources"][:5])
-                print(Fore.RED + Style.BRIGHT + f"  ☠  BREACHED: {src} [+{len(breach_info['sources'])} leaks]" + Style.RESET_ALL if not no_col else f"  BREACHED: {src}")
+                sources = breach_info["sources"]
+                print(Fore.RED + Style.BRIGHT + f"  ☠  BREACHED in {len(sources)} leaks:" + Style.RESET_ALL if not no_col else f"  BREACHED in {len(sources)} leaks:")
+                # Show all breach sources with numbering
+                for idx, src in enumerate(sources, 1):
+                    print(Fore.RED + f"     {idx:2}. {src}" + Style.RESET_ALL if not no_col else f"     {idx}. {src}")
+                    if idx >= 30 and len(sources) > 30:
+                        remaining = len(sources) - 30
+                        print(Fore.YELLOW + f"     ... and {remaining} more (see JSON export)" + Style.RESET_ALL if not no_col else f"     ... and {remaining} more")
+                        break
             else:
                 print(Fore.GREEN + f"  ✔  No public breach (xposedornot)" + Style.RESET_ALL if not no_col else "  No breach")
         if gravatar_info and gravatar_info.get("found"):

@@ -1,5 +1,5 @@
 # NoctraX — by Md. Faizal (@faizalx1337)
-### Professional OSINT Tool — Email | Username | Phone
+### OSINT Tool — Email | Username | Phone
 
 <p align="center">
   <img src="https://img.shields.io/badge/NoctraX-v2.2%20VOID%20SPECTER-red?style=for-the-badge" />
@@ -16,12 +16,12 @@
  ██║ ╚████║ ╚██████╔╝ ╚██████╗    ██║   ██║  ██║██║  ██║██╔╝ ██╗
  ╚═╝  ╚═══╝  ╚═════╝   ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
 
-  Professional OSINT Tool  •  by Md. Faizal (@faizalx1337)  •  v2.2
-  Professional OSINT
+  OSINT Tool  •  by Md. Faizal (@faizalx1337)  •  v2.2
+  OSINT
   IG: @faizalx1337  |  GitHub: github.com/evogix/NoctraX
 ```
 
-> **Professional OSINT — 100% Native • No APIs • Silent Hunt • Pipeline**
+> **OSINT — 100% Native • No APIs • Silent Hunt • Pipeline**
 
 ---
 
@@ -34,7 +34,7 @@
 | **Phone** | Carrier + Region + WhatsApp + Timezone | Airtel/Jio/Vi + WA surface |
 | **Pipeline** | `cat file.txt \| noctrax` auto-detect mixed | Email + Phone + Username one shot |
 | **Export** | CSV / JSON | For reporting |
-| **UI** | Neon hacker box + colorama + silent mode | `Professional OSINT` |
+| **UI** | Neon hacker box + colorama + silent mode | `OSINT` |
 
 - ✅ 100% Native — no holehe, no sherlock dependency
 - ✅ Colorama neon dark theme — professional hacker vibe
@@ -65,7 +65,7 @@ pip install -e . --break-system-packages
 ```bash
 noctrax --help
 noctrax --version
-# NoctraX v2.2 by Md. Faizal — Professional OSINT
+# NoctraX v2.2 by Md. Faizal — OSINT
 ```
 
 ---
@@ -186,9 +186,9 @@ noctrax example@gmail.com --only-used --no-breach --timeout 5
 ## 👤 Author
 **Md. Faizal — IG: @faizalx1337**  
 GitHub: **github.com/evogix/NoctraX**  
-Tagline: **Professional OSINT** — *Professional OSINT Tool*
+Tagline: **OSINT** — *OSINT Tool*
 
 <p align="center">
-  <b>⭐ Star the repo if you like NoctraX — Professional OSINT</b><br>
+  <b>⭐ Star the repo if you like NoctraX — OSINT</b><br>
   <code>pip install git+https://github.com/evogix/NoctraX.git</code>
 </p>

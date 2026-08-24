@@ -1,4 +1,4 @@
-"""NoctraX Accurate Engine v2.3 — Professional OSINT"""
+"""NoctraX Accurate Engine v2.3 — OSINT"""
 import random, hashlib, json, re
 import httpx
 from bs4 import BeautifulSoup

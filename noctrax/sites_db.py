@@ -1,4 +1,4 @@
-"""NoctraX Sites DB — Professional OSINT"""
+"""NoctraX Sites DB — OSINT"""
 import random, hashlib, json
 
 UA = "Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"

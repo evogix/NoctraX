@@ -5,19 +5,19 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "noctrax"
 version = "2.3.0"
-description = "NoctraX v2.3 Professional OSINT + PIPELINE by @faizalx1337 — Professional OSINT, 80+ Sites, Breach Intel, Silent Hunt"
+description = "NoctraX v2.3 OSINT + PIPELINE by @faizalx1337 — OSINT, 80+ Sites, Breach Intel, Silent Hunt"
 readme = "README.md"
 authors = [{name="Md. Faizal — IG: @faizalx1337"}]
 license = {text="MIT"}
 requires-python = ">=3.8"
 dependencies = [
-  "httpx>=0.24.0",
-  "trio>=0.22.0",
-  "beautifulsoup4>=4.12.0",
-  "termcolor>=2.3.0",
-  "colorama>=0.4.6",
-  "tqdm>=4.65.0",
-  "phonenumbers>=8.13.0"
+ "httpx>=0.24.0",
+ "trio>=0.22.0",
+ "beautifulsoup4>=4.12.0",
+ "termcolor>=2.3.0",
+ "colorama>=0.4.6",
+ "tqdm>=4.65.0",
+ "phonenumbers>=8.13.0"
 ]
 keywords = ["osint", "dark", "noctrax", "faizalx1337", "ghost", "void", "hacker"]
 
